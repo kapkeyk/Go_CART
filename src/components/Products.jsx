@@ -73,10 +73,10 @@ function Products() {
               <div className=''>
 
                 {!showModal && (
-                  <button type="button" class="btn btn-dark position-relative" onClick={toggle}>
-                    <HiOutlineShoppingCart className='text-xl' />
+                  <button type="button" className="btn btn-dark position-relative border-1 border-white" onClick={toggle}>
+                    <HiOutlineShoppingCart className='text-2xl text-white' />
                     <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                    {totalQuantity}
+                      {totalQuantity}
                     </span>
                   </button>
                 )}
@@ -104,7 +104,7 @@ function Products() {
                 </div>
                 <div className='absolute bottom-0 left-0 mb-6 ml-3'>
                   <button
-                    onClick={() => {addToCart(product); alert('Product added to cart!');}}
+                    onClick={() => { addToCart(product); alert('Product added to cart!'); }}
                     className='px-4 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded hover:bg-gray-700 focus:outline-none focus:bg-gray-700'
                   >
                     Add to cart
