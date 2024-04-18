@@ -25,7 +25,7 @@ export default function Cart({ showModal, toggle }) {
         <div className="overflow-y-auto max-h-96 mb-4 w-full">
           <div className="flex flex-col gap-4">
             {cartItems.map((item) => (
-              <div className="flex justify-between items-center border-t border-b border-gray-300 border-solid py-2 px-3" key={item.id}>
+              <div className="sm:flex-col flex justify-between items-center border-t border-b border-gray-300 border-solid py-2 px-3" key={item.id}>
                 <div className="flex gap-3">
                   <img src={item.image} alt={item.title} className="rounded-md h-20" />
                   <div className="flex flex-col">
