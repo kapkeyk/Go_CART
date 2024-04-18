@@ -64,10 +64,10 @@ function Products() {
 
   return (
     <div className='bg-body-tertiary'>
-      <div className='flex flex-col justify-center font-body max-w-7xl mx-auto'>
-        <nav className="navbar p-2 mb-4 font-body border-b border-gray-300 border-solid">
-          <div className="container-fluid">
-            <a className="navbar-brand font-semibold">Go_CART</a>
+      <div className='flex flex-col justify-center font-body '>
+        <nav className="bg-gray-800 navbar p-2 mb-4 font-body border-b border-gray-300 border-solid shadow-sm">
+          <div className="container-fluid max-w-7xl mx-auto">
+            <a className="navbar-brand font-semibold text-white">Go_CART</a>
             <form className="d-flex" role="search">
               <input className="form-control me-2" type="text" placeholder="Search products..." aria-label="Search" value={searchQuery} onChange={handleSearchChange} />
               <div className=''>
@@ -104,7 +104,7 @@ function Products() {
                 </div>
                 <div className='absolute bottom-0 left-0 mb-6 ml-3'>
                   <button
-                    onClick={() => addToCart(product)}
+                    onClick={() => {addToCart(product); alert('Product added to cart!');}}
                     className='px-4 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded hover:bg-gray-700 focus:outline-none focus:bg-gray-700'
                   >
                     Add to cart
