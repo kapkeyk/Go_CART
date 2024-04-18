@@ -4,6 +4,8 @@ import Cart from './Cart.jsx';
 import { CartContext } from '../context/Context.jsx';
 import { Rating } from "@material-tailwind/react";
 import { HiOutlineShoppingCart } from "react-icons/hi";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { MdErrorOutline } from "react-icons/md";
 
 function Products() {
   const [data, setData] = useState([]);
@@ -34,8 +36,9 @@ function Products() {
     fetchData();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
+  if (loading) return <div className='flex justify-center my-72'><AiOutlineLoading3Quarters className='text-5xl animate-spin' /></div>;
+  if (error) return <div className='flex justify-center items-center my-72'><MdErrorOutline className='text-5xl inline-block' /><div className="ml-2 text-xl">{error.message}</div></div>
+
 
   // Filtered items based on search query
   const filteredData = data.filter(product => product.title.toLowerCase().includes(searchQuery.toLowerCase()));
