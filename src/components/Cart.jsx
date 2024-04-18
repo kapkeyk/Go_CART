@@ -25,7 +25,7 @@ export default function Cart({ showModal, toggle }) {
         <div className="overflow-y-auto max-h-96 mb-4 w-full">
           <div className="flex flex-col gap-4">
             {cartItems.map((item) => (
-              <div className="sm:flex-col flex justify-between items-center border-t border-b border-gray-300 border-solid py-2 px-3" key={item.id}>
+              <div className="flex flex-wrap justify-between items-center border-t border-b border-gray-300 border-solid py-2 px-3" key={item.id}>
                 <div className="flex gap-3">
                   <img src={item.image} alt={item.title} className="rounded-md h-20" />
                   <div className="flex flex-col">
@@ -35,7 +35,7 @@ export default function Cart({ showModal, toggle }) {
                 </div>
                 <div className="flex flex-row-reverse gap-4">
                   <button
-                    className="px-4 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded hover:bg-gray-700 focus:outline-none focus:bg-gray-700"
+                    className=" px-3 py-1 bg-gray-800 text-white text-center text-xl font-bold uppercase rounded hover:bg-blue-900 focus:outline-none focus:bg-gray-700"
                     onClick={() => {
                       addToCart(item)
                     }}
@@ -44,7 +44,7 @@ export default function Cart({ showModal, toggle }) {
                   </button>
                   <p>{item.quantity}</p>
                   <button
-                    className="px-4 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded hover:bg-gray-700 focus:outline-none focus:bg-gray-700"
+                    className="px-3 py-1 bg-gray-800 text-center text-white text-xl font-bold uppercase rounded hover:bg-red-900 focus:outline-none focus:bg-gray-700"
                     onClick={() => {
                       removeFromCart(item)
                     }}
@@ -59,7 +59,7 @@ export default function Cart({ showModal, toggle }) {
         <div className="flex flex-col justify-between items-center">
           <h1 className="text-lg font-bold mb-4">Total: ${getCartTotal().toFixed(2)}</h1>
           <button
-            className="px-4 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded hover:bg-gray-700 focus:outline-none focus:bg-gray-700"
+            className="px-4 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded hover:bg-red-900 focus:outline-none focus:bg-gray-700"
             onClick={() => {
               handleClearCart() ,clearCart()
             }}
@@ -68,10 +68,10 @@ export default function Cart({ showModal, toggle }) {
           </button>
         </div>
         <button
-          className="absolute top-8 right-10 px-4 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded hover:bg-gray-700 focus:outline-none focus:bg-gray-700"
+          className="absolute top-10 right-10 px-3 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded hover:bg-red-900 focus:outline-none focus:bg-gray-700"
           onClick={toggle}
         >
-          CLOSE
+          X
         </button>
       </div>
     )

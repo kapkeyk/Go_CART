@@ -3,6 +3,7 @@ import axios from 'axios';
 import Cart from './Cart.jsx';
 import { CartContext } from '../context/Context.jsx';
 import { Rating } from "@material-tailwind/react";
+import { HiOutlineShoppingCart } from "react-icons/hi";
 
 function Products() {
   const [data, setData] = useState([]);
@@ -62,91 +63,89 @@ function Products() {
   };
 
   return (
-    <div className={'flex flex-col justify-center bg-gray-100 max-h-fit'}>
-      <div className='flex justify-between items-center px-20'>
-        <h1 className='text-2xl font-bold my-4 text-center font-body'>Go_CART</h1>
+    <div className='bg-body-tertiary'>
+      <div className='flex flex-col justify-center font-body max-w-7xl mx-auto'>
+        <nav className="navbar p-2 mb-4 font-body border-b border-gray-300 border-solid">
+          <div className="container-fluid">
+            <a className="navbar-brand font-semibold">Go_CART</a>
+            <form className="d-flex" role="search">
+              <input className="form-control me-2" type="text" placeholder="Search products..." aria-label="Search" value={searchQuery} onChange={handleSearchChange} />
+              <div className=''>
 
-        {/* Search input */}
-        <div className="flex-1 px-20">
-          <input
-            type="text"
-            placeholder="Search products..."
-            value={searchQuery}
-            onChange={handleSearchChange}
-            className="border border-gray-300 rounded-md px-3 py-2 w-full"
-          />
+                {!showModal && (
+                  <button type="button" class="btn btn-dark position-relative" onClick={toggle}>
+                    <HiOutlineShoppingCart className='text-xl' />
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    {totalQuantity}
+                    </span>
+                  </button>
+                )}
+              </div>
+            </form>
+          </div>
+        </nav>
+        <div className='grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-10'>
+          {currentItems.map((product) => (
+            <>
+              <div key={product.id} className='relative bg-white border-1 shadow-md rounded-lg py-3 px-3 transition-transform duration-300 transform hover:-translate-y-1'>
+                <div className='mb-16'>
+                  <div className='flex justify-center'>
+                    <img src={product.image} alt={product.title} className='rounded-md h-48' />
+                  </div>
+                  <div className='mt-4'>
+                    <h1 className='text-lg uppercase font-bold'>{product.title.slice(0, 40)}...</h1>
+                    <details className='mt-2'>
+                      <summary className='mb-2 text-gray-600 text-sm truncate'>{product.description.slice(0, 20)}...</summary>
+                      <p className='text-gray-600 text-sm'>{product.description}...</p>
+                    </details>
+                    <p className=' text-gray-800 font-semibold'>${product.price}</p>
+                    <p className=''><Rating value={Math.round(product.rating.rate)} readonly /></p>
+                  </div>
+                </div>
+                <div className='absolute bottom-0 left-0 mb-6 ml-3'>
+                  <button
+                    onClick={() => addToCart(product)}
+                    className='px-4 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded hover:bg-gray-700 focus:outline-none focus:bg-gray-700'
+                  >
+                    Add to cart
+                  </button>
+                </div>
+              </div>
+            </>
+          ))}
         </div>
-
-        {!showModal && (
+        <div className='flex justify-center my-4 flex-wrap gap-2 sm:gap-0'>
+          {/* Previous button */}
           <button
-            className='px-4 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded hover:bg-gray-700 focus:outline-none focus:bg-gray-700'
-            onClick={toggle}
+            onClick={() => paginate(currentPage - 1)}
+            disabled={currentPage === 1}
+            className={`px-3 py-1 rounded-md mx-2 ${currentPage === 1 ? 'bg-gray-300 text-gray-700' : 'bg-gray-800 text-white'}`}
           >
-            CART ({totalQuantity})
+            Prev
           </button>
-        )}
-      </div>
-
-      <div className='grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-10'>
-        {currentItems.map((product) => (
-          <>
-            <div key={product.id} className='relative bg-white border-1 shadow-md rounded-lg py-3 px-3 transition-transform duration-300 transform hover:-translate-y-1'>
-              <div className='mb-16'>
-                <div className='flex justify-center'>
-                  <img src={product.image} alt={product.title} className='rounded-md h-48' />
-                </div>
-                <div className='mt-4'>
-                  <h1 className='text-lg uppercase font-bold'>{product.title.slice(0, 40)}...</h1>
-                  <details className='mt-2'>
-                    <summary className='mb-2 text-gray-600 text-sm truncate'>{product.description.slice(0, 20)}...</summary>
-                    <p className='text-gray-600 text-sm'>{product.description}...</p>
-                  </details>
-                  <p className=' text-gray-800 font-semibold'>${product.price}</p>
-                  <p className=''><Rating value={Math.round(product.rating.rate)} readonly /></p>
-                </div>
-              </div>
-              <div className='absolute bottom-0 left-0 mb-6 ml-3'>
-                <button
-                  onClick={() => addToCart(product)}
-                  className='px-4 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded hover:bg-gray-700 focus:outline-none focus:bg-gray-700'
-                >
-                  Add to cart
-                </button>
-              </div>
-            </div>
-          </>
-        ))}
-      </div>
-      <div className='flex justify-center my-4'>
-        {/* Previous button */}
-        <button
-          onClick={() => paginate(currentPage - 1)}
-          disabled={currentPage === 1}
-          className={`px-3 py-1 rounded-md mx-2 ${currentPage === 1 ? 'bg-gray-300 text-gray-700' : 'bg-gray-800 text-white'}`}
-        >
-          Prev
-        </button>
-        {/* Pagination */}
-        {[...Array(totalPages)].map((_, index) => (
+          {/* Pagination */}
+          {[...Array(totalPages)].map((_, index) => (
+            <button
+              key={index}
+              onClick={() => paginate(index + 1)}
+              className={`px-3 rounded-md py-1 mx-2 ${currentPage === index + 1 ? 'bg-gray-800 text-white' : 'bg-gray-300 text-gray-700'}`}
+            >
+              {index + 1}
+            </button>
+          ))}
+          {/* Next button */}
           <button
-            key={index}
-            onClick={() => paginate(index + 1)}
-            className={`px-3 rounded-md py-1 mx-2 ${currentPage === index + 1 ? 'bg-gray-800 text-white' : 'bg-gray-300 text-gray-700'}`}
+            onClick={() => paginate(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className={`px-3 py-1 rounded-md mx-2 ${currentPage === totalPages ? 'bg-gray-300 text-gray-700' : 'bg-gray-800 text-white'}`}
           >
-            {index + 1}
+            Next
           </button>
-        ))}
-        {/* Next button */}
-        <button
-          onClick={() => paginate(currentPage + 1)}
-          disabled={currentPage === totalPages}
-          className={`px-3 py-1 rounded-md mx-2 ${currentPage === totalPages ? 'bg-gray-300 text-gray-700' : 'bg-gray-800 text-white'}`}
-        >
-          Next
-        </button>
+        </div>
+        <Cart showModal={showModal} toggle={toggle} />
       </div>
-      <Cart showModal={showModal} toggle={toggle} />
     </div>
+
   );
 }
 
