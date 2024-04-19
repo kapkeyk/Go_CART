@@ -41,7 +41,7 @@ function Products() {
 
 
   // Filtered items based on search query
-  const filteredData = data.filter(product => product.title.toLowerCase().includes(searchQuery.toLowerCase()));
+  const filteredData = data.filter(product => product.title.toLowerCase().includes(searchQuery.toLowerCase())|| product.category.toLowerCase().includes(searchQuery.toLowerCase()));
 
   // Pagination logic
   const indexOfLastItem = currentPage * itemsPerPage;
